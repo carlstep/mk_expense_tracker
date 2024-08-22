@@ -17,6 +17,14 @@ class _HomePageState extends State<HomePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
+  // read expenses
+  @override
+  void initState() {
+    Provider.of<ExpenseDatabase>(context, listen: false).readExpenses();
+
+    super.initState();
+  }
+
   // open new expense box
   void openNewExpense() {
     showDialog(
@@ -52,10 +60,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: openNewExpense,
-        child: const Icon(Icons.add),
+    return Consumer<ExpenseDatabase>(
+      builder: (context, value, child) => Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: openNewExpense,
+          child: const Icon(Icons.add),
+        ),
+        body: ListView.builder(
+            itemCount: value.allExpense.length,
+            itemBuilder: (context, index) {
+              // get individual expense
+              Expense eachExpense = value.allExpense[index];
+
+              // return a list tile
+              return ListTile(
+                title: Text(eachExpense.name),
+                trailing: Text(eachExpense.amount.toString()),
+              );
+            }),
       ),
     );
   }
