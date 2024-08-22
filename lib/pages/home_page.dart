@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mk_expense_tracker/components/my_list_tile.dart';
 import 'package:mk_expense_tracker/database/expense_database.dart';
 import 'package:mk_expense_tracker/helper/helper_functions.dart';
 import 'package:mk_expense_tracker/main.dart';
@@ -72,12 +73,11 @@ class _HomePageState extends State<HomePage> {
               // get individual expense
               Expense eachExpense = value.allExpense[index];
 
-              // return a list tile
-              return ListTile(
-                title: Text(eachExpense.name),
-                // uses helper function to format the given amount
-                trailing: Text(formatAmount(eachExpense.amount)),
-              );
+              // return a custom list tile
+              // MyListTile requires title & trailing
+              return MyListTile(
+                  title: eachExpense.name,
+                  trailing: formatAmount(eachExpense.amount));
             }),
       ),
     );
