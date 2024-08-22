@@ -75,7 +75,8 @@ class _HomePageState extends State<HomePage> {
               // return a list tile
               return ListTile(
                 title: Text(eachExpense.name),
-                trailing: Text(eachExpense.amount.toString()),
+                // uses helper function to format the given amount
+                trailing: Text(formatAmount(eachExpense.amount)),
               );
             }),
       ),
